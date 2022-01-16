@@ -1,4 +1,4 @@
-# Lau is a small bot for my private discord server
+# Lau - is a small bot for my private discord server
 It is currently in development..
 
 ## Features:
