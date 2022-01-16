@@ -8,7 +8,7 @@ with open("config.json", "r") as config:
 
 # Defining all variables
 PREFIX = "%"
-TESTING_GUILD_ID = [831978811435515944]
+TESTING_GUILD_ID = config["test_guild_id"]
 TOKEN = config["token"]
 DESCRIPTION = """This is a simple Bot which can play music, access the r6tracker networks database, administrate your server and much much more..... """
 
