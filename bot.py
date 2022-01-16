@@ -4,7 +4,7 @@ import discord
 # Defining all variables
 PREFIX = "%"
 TESTING_GUILD_ID = [831978811435515944]
-TOKEN = "NzIzNTI5NzI2NjY0MTE0MjQ3.Xuy9kQ.FCkCNS9dPNfN17EJRtNA8pIGvI0"
+TOKEN = ""
 DESCRIPTION = """This is a simple Bot which can play music, access the r6tracker networks database, administrate your server and much much more..... """
 
 
