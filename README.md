@@ -7,8 +7,9 @@ It is currently in development..
 - Music Integration (Youtube, Spotify)
 - Access to R6Tracker Networks Database
 - Some Admin stuff
+- Useful User commands
 
 
-Feel free to review the code and create pull request :)
+Feel free to review the code and create pull requests :)
 
 If there are any question contact me on discord: 𝕱𝖔𝖗𝖊𝖘𝖙_𝕮𝖆𝖙#0512
