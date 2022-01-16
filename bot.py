@@ -1,10 +1,15 @@
 from discord.ext import commands
 import discord
+import json
+
+# Reading Config File
+with open("config.json", "r") as config:
+    config = json.load(config)
 
 # Defining all variables
 PREFIX = "%"
 TESTING_GUILD_ID = [831978811435515944]
-TOKEN = ""
+TOKEN = config["token"]
 DESCRIPTION = """This is a simple Bot which can play music, access the r6tracker networks database, administrate your server and much much more..... """
 
 
