@@ -1,7 +1,9 @@
 from discord.ext import commands
 import discord
 import json
+import os
 
+os.chdir(os.path.dirname(__file__))
 # Reading Config File
 with open("config.json", "r") as config:
     config = json.load(config)
