@@ -51,6 +51,7 @@ class Music(commands.Cog):
     running = False
     is_paused = False
     voice_client = None
+    loop_song = False
 
     extract_lyrics = SongLyrics(config["GCS_API_KEY"], config["GCS_ENGINE_ID"])
     ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
@@ -79,11 +80,21 @@ class Music(commands.Cog):
                 await ctx.respond('Now playing: `{}`'.format(player.title))
                 self.currentPlayingSong = player.title
                 ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-                ctx.voice_client.source.volume = 10 / 100
                 del self.song_queue[0]
             if len(self.song_queue) == 0:
                 self.running = False
                 await ctx.send("`Queue endet`")
+                break
+            await asyncio.sleep(1)
+
+    async def loop_loop(self, ctx):
+        while self.loop_song:
+            if not ctx.voice_client.is_playing():
+                player = await Music.YTDLSource.from_url(self.currentPlayingSong, loop=self.bot.loop, stream=True)
+                await ctx.send('Now playing: `{}`'.format(player.title))
+                ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+            if not self.loop_song:
+                print("stopped loop")
                 break
             await asyncio.sleep(1)
             
@@ -178,14 +189,26 @@ class Music(commands.Cog):
                 await ctx.respond("Im not playing anything no need to stop")
         except AttributeError:
             await ctx.respond("I need to be in a voice channel to stop music")
+    
+    @slash_command(guild_ids=config["test_guild_id"], description="Loops current Track")
+    async def loop(self, ctx,):
+        if not self.loop_song:
+            self.loop_song = True
+            await ctx.respond("Loop: `Enabled`")
+            self.bot.loop.create_task(self.loop_loop(ctx=ctx))
+        else:
+            await ctx.respond("Loop: `Disabled`")
+            self.loop_song = False
 
-    @slash_command(guild_ids=config["test_guild_id"], description="[BETA] Displays the current Songs in Queue")
+    @slash_command(guild_ids=config["test_guild_id"], description="Displays the current Songs in Queue")
     async def queue(self, ctx,):
         queue = ""
         for i, song in enumerate(self.song_queue):
             queue += f"[{i}]  -  {song}\n"
-        
-        await ctx.respond(f"```{queue}```")
+        if len(self.song_queue) > 0:
+            await ctx.respond(f"```{queue}```")
+        else:
+            await ctx.respond("Queue is empty")
 
     
     @slash_command(guild_ids=config["test_guild_id"], description="Displays currents playing songs lyrics")
