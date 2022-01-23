@@ -2,9 +2,10 @@
 It is currently in development..
 
 ## Features:
+- [BETA] Music Integration (Youtube)
 
 ## Planned:
-- Music Integration (Youtube, Spotify)
+- Music Integration (Spotify)
 - Access to R6Tracker Networks Database
 - Some Admin stuff
 - Useful User commands
