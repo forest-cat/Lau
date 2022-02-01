@@ -1,6 +1,6 @@
 # Lau - is a small bot for my private discord server
 It is currently in development..
-Its written in python and [pycord](https://github.com/Pycord-Development/pycord)
+Its written in [python](https://python.org) and [pycord](https://github.com/Pycord-Development/pycord)
 
 ## Features:
 - [BETA] Music Integration (Youtube)
