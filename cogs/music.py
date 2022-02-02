@@ -21,7 +21,6 @@ class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    print(os.path.dirname(__file__))
     os.chdir(os.path.dirname(__file__))
 
     with open("../config.json", "r") as config:

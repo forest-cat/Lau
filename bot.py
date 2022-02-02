@@ -19,7 +19,7 @@ bot = commands.Bot(command_prefix=PREFIX, description=DESCRIPTION)
 
 
 # Loading the Extensions aka. cogs
-registered_extensions = ['cogs.music', 'cogs.slash']
+registered_extensions = ['cogs.music', 'cogs.r6tracker']
 
 for extension in registered_extensions:
     bot.load_extension(extension)
