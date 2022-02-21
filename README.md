@@ -1,5 +1,8 @@
 # Lau - is a small bot for my private discord server
 It is currently in development..
+
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=forest-cat&repo=Lau)](https://github.com/anuraghazra/github-readme-stats)
+
 Its written in [python](https://python.org) and [pycord](https://github.com/Pycord-Development/pycord)
 
 ## Features:
