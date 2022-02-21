@@ -1,9 +1,8 @@
 # Lau - is a small bot for my private discord server
-It is currently in development..
 
-[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=forest-cat&repo=Lau)](https://github.com/anuraghazra/github-readme-stats)
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=forest-cat&repo=Lau&theme=tokyonight&hide_border=true)](https://github.com/forest-cat/Lau)
 
-Its written in [python](https://python.org) and [pycord](https://github.com/Pycord-Development/pycord)
+It is currently in development and its written in [python](https://python.org) and [pycord](https://github.com/Pycord-Development/pycord)
 
 ## Features:
 - [BETA] Music Integration (Youtube)
