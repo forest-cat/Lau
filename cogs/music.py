@@ -46,6 +46,7 @@ class Music(commands.Cog):
     
     song_queue = []
     currentPlayingSong = None
+    playerVolume = int(config["PlayerVolume"])
     isplaying = False
     running = False
     is_paused = False
@@ -73,13 +74,17 @@ class Music(commands.Cog):
 
     async def music_loop(self, ctx):
         while True:
-            if len(self.song_queue) > 0 and not ctx.voice_client.is_playing():
-                ctx.voice_client.stop()
-                player = await Music.YTDLSource.from_url(self.song_queue[0], loop=self.bot.loop, stream=True)
-                await ctx.respond('Now playing: `{}`'.format(player.title))
-                self.currentPlayingSong = player.title
-                ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-                del self.song_queue[0]
+            if self.is_paused:
+                print("Not playing because paused, skipping...")
+            else:
+                if len(self.song_queue) > 0 and not ctx.voice_client.is_playing():
+                    ctx.voice_client.stop()
+                    player = await Music.YTDLSource.from_url(self.song_queue[0], loop=self.bot.loop, stream=True)
+                    await ctx.respond('Now playing: `{}`'.format(player.title))
+                    self.currentPlayingSong = player.title
+                    ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+                    ctx.voice_client.source.volume = self.playerVolume / 100
+                    del self.song_queue[0]
             if len(self.song_queue) == 0:
                 self.running = False
                 await ctx.send("`Queue endet`")
@@ -115,7 +120,7 @@ class Music(commands.Cog):
             if 'entries' in info_dict:
                 # take first item from a playlist
                 info_dict = info_dict['entries'][0]
-            await ctx.respond("[+] Already Playing - Adding to queue")
+            await ctx.respond(f"[+] Already Playing - Added: `{info_dict.get('title')}`")
             self.song_queue.append(info_dict.get('title'))
             if self.running == False:
                 print("started loop")
@@ -129,17 +134,18 @@ class Music(commands.Cog):
             await msg.edit_original_message(content='Now playing: `{}`'.format(player.title))
             self.currentPlayingSong = player.title
             ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-            ctx.voice_client.source.volume = 10 / 100
+            ctx.voice_client.source.volume = self.playerVolume / 100
                
     @slash_command(guild_ids=config["test_guild_id"], description="Changes the player's volume")
     async def volume(self, ctx, volume: int):
         if ctx.voice_client is None:
             return await ctx.respond("Not connected to a voice channel.")
         if volume >= 1 and volume <= 200:
-            ctx.voice_client.source.volume = volume / 100
+            self.volume = volume
+            ctx.voice_client.source.volume = self.playerVolume / 100
             await ctx.respond("Changed volume to `{}%`".format(volume))
         else:
-            await ctx.respond(f"Versuchs gar nicht erst du Hurensohn, dein IQ beträgt: `{volume}`")
+            await ctx.respond(f"Versuchs gar nicht erst du Hurensohn, dein IQ beträgt: -`{volume}`")
 
     @slash_command(guild_ids=config["test_guild_id"], description="Skips the current playing song")
     async def skip(self, ctx):
@@ -169,7 +175,7 @@ class Music(commands.Cog):
     @slash_command(guild_ids=config["test_guild_id"], description="Resumes the music")
     async def resume(self, ctx,):
         try:
-            if ctx.voice_client.is_paused():
+            if ctx.voice_client.is_paused() or self.is_paused:
                 ctx.voice_client.resume()
                 await ctx.respond("Music: `Resumed`")
                 self.is_paused = False
@@ -178,7 +184,7 @@ class Music(commands.Cog):
         except AttributeError:
             await ctx.respond("I need to be in a voice channel to resume music")
 
-    @slash_command(guild_ids=config["test_guild_id"], description="Resumes the music")
+    @slash_command(guild_ids=config["test_guild_id"], description="Stops playing instantly (can't be resumed)")
     async def stop(self, ctx,):
         try:
             if ctx.voice_client.is_playing():
