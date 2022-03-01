@@ -25,7 +25,7 @@ class R6Tracker(commands.Cog):
     # https://r6.tracker.network/profile/pc/BurakDasBoereck
     @slash_command(guild_ids=config["test_guild_id"])
     async def stats(self, ctx, device: Option(str, "Choose a Device", choices=["PC", "PlayStation", "XBox", "Toaster"]), username: str):
-        """Says hello from the Cog"""
+        """Gets the Rainbow Six stats for the given Player"""
         await ctx.respond(f"{username} is playing on {device}")
         await self.get()
         
