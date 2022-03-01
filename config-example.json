@@ -1,0 +1,7 @@
+{
+    "token": "Put in here your Discord Bot Account Token",
+    "test_guild_id": [229758118909254439, "here all ids for guilds the bot should work on"],
+    "GCS_API_KEY": "get your programmable google search engine here: https://programmablesearchengine.google.com",
+    "GCS_ENGINE_ID": "the id of your programmable google search engine",
+    "PlayerVolume": 8
+}
