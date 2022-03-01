@@ -31,10 +31,12 @@ for extension in registered_extensions:
 async def on_ready():
     print(f"Logged in as: {bot.user.name}")
 
-@bot.slash_command(guild_ids=TESTING_GUILD_ID)  # create a slash command for the supplied guilds
-async def hellofrommain(ctx):
-    """Say hello to the bot"""  # the command description can be supplied as the docstring
-    await ctx.respond(f"Hello {ctx.author}!")
+
+# An Example for a slash command
+# @bot.slash_command(guild_ids=TESTING_GUILD_ID)  # create a slash command for the supplied guilds
+# async def hellofrommain(ctx):
+#     """Say hello to the bot"""  # the command description can be supplied as the docstring
+#     await ctx.respond(f"Hello {ctx.author}!")
 
 
 bot.run(TOKEN)
