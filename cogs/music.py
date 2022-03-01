@@ -66,9 +66,12 @@ class Music(commands.Cog):
         async def from_url(cls, url, *, loop=None, stream=False):
             loop = loop or asyncio.get_event_loop()
             data = await loop.run_in_executor(None, lambda: Music.ytdl.extract_info(url, download=not stream))
-            if 'entries' in data:
-                # take first item from a playlist
-                data = data['entries'][0]
+            try:
+                if 'entries' in data:
+                    # take first item from a playlist
+                    data = data['entries'][0]
+            except TypeError:
+                print("Data is empty") 
             filename = data['url'] if stream else Music.ytdl.prepare_filename(data)
             return cls(discord.FFmpegPCMAudio(filename, **Music.ffmpeg_options), data=data)
 
@@ -233,6 +236,16 @@ class Music(commands.Cog):
                 await resp.edit_original_message(content="There are sadly no Lyrics for this song aviable")
         else:
             await ctx.respond("Nothing playing currently, start playing with `/play your song`")
+
+    @slash_command(guild_ids=config["test_guild_id"], description="Shows currently playing song")
+    async def nowplaying(self, ctx,):
+        if self.currentPlayingSong != None:
+            await ctx.respond(f"Currently playing `{self.currentPlayingSong}` ")
+            info_dict = self.ytdl.extract_info(self.currentPlayingSong, download=False)
+            # Work further here
+            ##print("\n"+str(info_dict.get("len")))
+        else:
+            await ctx.respond(f"Not Playing anything, use `/play` to start playing")
 
     @play.before_invoke
     async def ensure_voice(self, ctx):
