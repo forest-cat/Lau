@@ -144,7 +144,7 @@ class Music(commands.Cog):
         if ctx.voice_client is None:
             return await ctx.respond("Not connected to a voice channel.")
         if volume >= 1 and volume <= 200:
-            self.volume = volume
+            self.playerVolume = volume
             ctx.voice_client.source.volume = self.playerVolume / 100
             await ctx.respond("Changed volume to `{}%`".format(volume))
         else:
