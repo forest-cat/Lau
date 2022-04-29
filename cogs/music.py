@@ -70,6 +70,7 @@ class Music(commands.Cog):
                 if 'entries' in data:
                     # take first item from a playlist
                     data = data['entries'][0]
+                    #print(f"\n\nDuration: {data['duration']}")
             except TypeError:
                 print("Data is empty") 
             filename = data['url'] if stream else Music.ytdl.prepare_filename(data)
@@ -96,7 +97,7 @@ class Music(commands.Cog):
 
     async def loop_loop(self, ctx):
         while self.loop_song:
-            if not ctx.voice_client.is_playing():
+            if not ctx.voice_client.is_playing() and not self.is_paused:
                 player = await Music.YTDLSource.from_url(self.currentPlayingSong, loop=self.bot.loop, stream=True)
                 await ctx.send('Now playing: `{}`'.format(player.title))
                 ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
@@ -105,9 +106,9 @@ class Music(commands.Cog):
                 break
             await asyncio.sleep(1)
             
-    ##########################
-    ### Commands and Events###
-    ##########################
+    ###########################
+    ### Commands and Events ###
+    ###########################
     
     @commands.Cog.listener()
     async def on_ready(self):
