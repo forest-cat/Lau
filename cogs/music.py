@@ -234,7 +234,7 @@ class Music(commands.Cog):
                 else:
                     reply = await ctx.send(f"```{lyrics}```")
             except lyrics_extractor.LyricScraperException:
-                await resp.edit_original_message(content="There are sadly no Lyrics for this song aviable")
+                await resp.edit_original_message(content="There are sadly no Lyrics for this song available")
         else:
             await ctx.respond("Nothing playing currently, start playing with `/play your song`")
 
