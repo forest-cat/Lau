@@ -13,13 +13,17 @@ PREFIX = "%"
 TESTING_GUILD_ID = config["test_guild_id"]
 TOKEN = config["token"]
 DESCRIPTION = """This is a simple Bot which can play music, access the r6tracker networks database, administrate your server and much much more..... """
+INTENTS = discord.Intents.default()
+INTENTS.message_content = True
+INTENTS.members = True
+INTENTS.presences = True
 
 
-bot = commands.Bot(command_prefix=PREFIX, description=DESCRIPTION)
+bot = commands.Bot(command_prefix=PREFIX, description=DESCRIPTION, intents=INTENTS)
 
 
 # Loading the Extensions aka. cogs
-registered_extensions = ['cogs.music', 'cogs.r6tracker']
+registered_extensions = ['cogs.music', 'cogs.r6tracker', 'cogs.slash']
 
 for extension in registered_extensions:
     bot.load_extension(extension)
