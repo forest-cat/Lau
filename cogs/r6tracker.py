@@ -44,7 +44,7 @@ class R6Tracker(commands.Cog):
         return EmbedStats
 
     # https://r6.tracker.network/profile/pc/BurakDasBoereck
-    @slash_command(guild_ids=config["test_guild_id"])
+    @slash_command(guild_ids=config["guild_ids"])
     async def stats(self, ctx, device: Option(str, "Choose a Device", choices=["PC", "PlayStation", "XBox"]), username: str):
         """Gets the Rainbow Six stats for the given Player"""
         self.username = username
