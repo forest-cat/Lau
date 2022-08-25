@@ -45,17 +45,12 @@ class Twitch(commands.Cog):
                     streamers[live_streamer['name']]["live"] = False
                     streamers[live_streamer['name']]["sent_msg"] = False
 
-                print(streamers[live_streamer['name']]["sent_msg"])
                 if streamers[live_streamer['name']]["live"] and not streamers[live_streamer['name']]["sent_msg"]:
                     for channel in self.config['twitch_promotion_channel_ids']:
                         channel = self.bot.get_channel(channel)
                         dc_user = f"<@{live_streamer['dc_user_id']}>" if live_streamer['dc_user_id'] != 'NONE' else live_streamer['name']
                         await channel.send(self.config['twitch_promotion_message'].replace("%streamer%", live_streamer['name']).replace("%dc_user%", str(dc_user)))
                         streamers[live_streamer['name']]["sent_msg"] = True
-            print(streamers)
-
-
-
 
             await asyncio.sleep(20)
 

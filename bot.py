@@ -1,12 +1,20 @@
+from shutil import ExecError
+from discord.commands import slash_command
 from discord.ext import commands
 import discord
 import json
 import os
 
-os.chdir(os.path.dirname(__file__))
-# Reading Config File
-with open("config.json", "r") as config:
-    config = json.load(config)
+
+def read_config():
+    os.chdir(os.path.dirname(__file__))
+    # Reading Config File
+    with open("config.json", "r") as config:
+        config = json.load(config)
+    return config
+
+
+config = read_config()
 
 # Defining all variables
 PREFIX = "%"
@@ -20,27 +28,30 @@ INTENTS.presences = True
 
 
 bot = commands.Bot(command_prefix=PREFIX, description=DESCRIPTION, intents=INTENTS)
+bot.remove_command('help')
 
 
 # Loading the Extensions aka. cogs
-registered_extensions = ['cogs.music', 'cogs.r6tracker', 'cogs.slash', 'cogs.twitch']
+registered_extensions = ['cogs.main', 'cogs.music', 'cogs.r6tracker', 'cogs.slash', 'cogs.twitch']
 
 for extension in registered_extensions:
     bot.load_extension(extension)
-    print(f"\033[92m[+]\033[00m loaded: {extension}")
+    print(f"\033[92m[+]\033[00m Extension loaded: {extension}")
 
+@commands.has_permissions(administrator=True)
+@bot.slash_command(guild_ids=config["guild_ids"], description="Loads the gives cog")
+async def load_cog(ctx, cog_name: str):
+    bot.load_extension(cog_name)
+    await ctx.respond(f"The Cog: `{cog_name}` has been loaded", ephemeral=True)
 
-# Running the actual bot
-@bot.event
-async def on_ready():
-    print(f"Logged in as: \033[36m{bot.user.name}\033[90m#\033[37m{bot.user.discriminator}\033[0m")
-
-
-# An Example for a slash command
-# @bot.slash_command(guild_ids=TESTING_GUILD_ID)  # create a slash command for the supplied guilds
-# async def hellofrommain(ctx):
-#     """Say hello to the bot"""  # the command description can be supplied as the docstring
-#     await ctx.respond(f"Hello {ctx.author}!")
-
+@commands.has_permissions(administrator=True)
+@bot.slash_command(guild_ids=config["guild_ids"], description="Unloads the gives cog")
+async def unload_cog(ctx, cog_name: str):
+    try:
+        bot.unload_extension(cog_name)
+        await ctx.respond(f"The Cog: `{cog_name}` has been unloaded", ephemeral=True)
+    except discord.errors.ExtensionNotLoaded:
+        await ctx.respond(f"The Cog: `{cog_name}` was never loaded", ephemeral=True)
+    
 
 bot.run(TOKEN)
