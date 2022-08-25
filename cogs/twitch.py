@@ -21,7 +21,7 @@ class Twitch(commands.Cog):
 
     
     async def twitch_live_check(self, twitch_broadcaster: list = config['twitch_broadcaster']):
-        counter = 0
+        #counter = 0
         streamers = {}
         streamer_state = {
             "live": False,
@@ -32,8 +32,8 @@ class Twitch(commands.Cog):
             streamers[live_streamer['name']] = streamer_state.copy()
 
         while True:
-            print(f"Loop ran: {counter}")
-            counter +=1
+            #print(f"Loop ran: {counter}")
+            #counter +=1
 
             for live_streamer in twitch_broadcaster:
                 
