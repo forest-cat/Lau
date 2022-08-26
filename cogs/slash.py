@@ -30,11 +30,10 @@ class Slash(commands.Cog):
     async def randomnumber(self, ctx, min: int, max: int):
         await ctx.respond(f"Your lucky number today is: `{random.randint(min, max) if max >= min else '∞'}`")
     
-
-
-
-
-
+    @slash_command(guild_ids=config["guild_ids"], description="Shows you the bots latency to the Discord API")
+    async def ping(self, ctx):
+        await ctx.respond(f"My Latency is: `{int(round(self.bot.latency*60, 0))}`ms")
+    
 def setup(bot):
     bot.add_cog(Slash(bot))
 
