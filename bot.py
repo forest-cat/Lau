@@ -42,16 +42,16 @@ for extension in registered_extensions:
         print(f"\033[31m[-]\033[00m Extension skipped: {extension.replace('!','')}")
 
 
-@bot.slash_command(guild_ids=config["guild_ids"], description="Loads the gives cog (this can break some extensions, be careful what you do!)")
+@bot.slash_command(guild_ids=config["guild_ids"], description="Loads the given cog (this can break some extensions, be careful what you do!)")
 async def load_cog(ctx, cog_name: str):
     if ctx.author.guild_permissions.administrator:
         bot.load_extension(cog_name)
         await ctx.respond(f"The Cog: `{cog_name}` has been loaded", ephemeral=True)
     else:
-        await ctx.respond(f"You dont have the permission to manage Cogs", ephemeral=True)
+        await ctx.respond("You dont have the permission to manage Cogs", ephemeral=True)
 
 
-@bot.slash_command(guild_ids=config["guild_ids"], description="Unloads the gives cog (this can break some extensions, be careful what you do!)")
+@bot.slash_command(guild_ids=config["guild_ids"], description="Unloads the given cog (this can break some extensions, be careful what you do!)")
 async def unload_cog(ctx, cog_name: str):
     if ctx.author.guild_permissions.administrator:
         try:
@@ -60,7 +60,7 @@ async def unload_cog(ctx, cog_name: str):
         except discord.errors.ExtensionNotLoaded:
             await ctx.respond(f"The Cog: `{cog_name}` was never loaded", ephemeral=True)
     else:
-        await ctx.respond(f"You dont have the permission to manage Cogs", ephemeral=True)
+        await ctx.respond("You dont have the permission to manage Cogs", ephemeral=True)
     
 
 bot.run(TOKEN)

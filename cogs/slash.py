@@ -26,13 +26,17 @@ class Slash(commands.Cog):
     async def coinflip(self, ctx):
         await ctx.respond(f"The universe has made a decision, the coin landed on: `{'Tails' if random.randint(0,1) == 1 else 'Heads'}`")
     
-    @slash_command(guild_ids=config["guild_ids"], description="Find your lucky number now")
-    async def randomnumber(self, ctx, min: int, max: int):
+    @slash_command(guild_ids=config["guild_ids"], description="Find your lucky number now (default range is 1-100)")
+    async def randomnumber(self, ctx, min: int = 1, max: int = 100):
         await ctx.respond(f"Your lucky number today is: `{random.randint(min, max) if max >= min else '∞'}`")
     
     @slash_command(guild_ids=config["guild_ids"], description="Shows you the bots latency to the Discord API")
     async def ping(self, ctx):
         await ctx.respond(f"My Latency is: `{int(round(self.bot.latency*60, 0))}`ms")
+
+    @slash_command(guild_ids=config["guild_ids"], description="Calculates the time simon needs to show up, given the time simon said he would need")
+    async def simon_time(self, ctx, minutes: int):
+        await ctx.respond(f"The time simon will need is: `{int(round(minutes * random.uniform(1,4), 0))}`min")
     
 def setup(bot):
     bot.add_cog(Slash(bot))
