@@ -20,7 +20,7 @@ class Slash(commands.Cog):
         messages = await ctx.channel.history(limit=1).flatten()
         await messages[0].add_reaction("<:upvote:1005110315022827610>")
         await messages[0].add_reaction("<:downvote:1005110312812433439>")
-        await ctx.respond(f"Added to Reactions to: `{messages[0].content}`", ephemeral=True)
+        await ctx.respond(f"Added to Reactions to: `{messages[0].content[:1800]}`", ephemeral=True)
     
     @slash_command(guild_ids=config["guild_ids"], description="Let the universe decide")
     async def coinflip(self, ctx):
