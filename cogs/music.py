@@ -16,6 +16,7 @@ import os
 import re
 
 
+#todo rewrite the whole music part
 
 class Music(commands.Cog):
     def __init__(self, bot):
