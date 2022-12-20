@@ -13,7 +13,6 @@ class Main(commands.Cog):
     sys.path.append(os.path.dirname(__file__)[:-4])
     from bot import read_config
 
-    # # Running the actual bot
     @commands.Cog.listener()
     async def on_ready(self):
         print(f"Logged in as: \033[36m{self.bot.user.name}\033[90m#\033[37m{self.bot.user.discriminator}\033[0m")

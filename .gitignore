@@ -1,2 +1,5 @@
 **/cogs/__pycache__
+**/cogs/models/de
+**/audio/
 config.json
+google-service-creds.json

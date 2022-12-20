@@ -21,7 +21,6 @@ class Twitch(commands.Cog):
 
     
     async def twitch_live_check(self, twitch_broadcaster: list = config['twitch_broadcaster']):
-        #counter = 0
         streamers = {}
         streamer_state = {
             "live": False,
@@ -52,7 +51,7 @@ class Twitch(commands.Cog):
                         await channel.send(self.config['twitch_promotion_message'].replace("%streamer%", live_streamer['name']).replace("%dc_user%", str(dc_user)))
                         streamers[live_streamer['name']]["sent_msg"] = True
 
-            await asyncio.sleep(20)
+            await asyncio.sleep(200)
 
     
     @commands.Cog.listener()

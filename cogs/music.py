@@ -117,7 +117,7 @@ class Music(commands.Cog):
 
     @slash_command(guild_ids=config["guild_ids"], description="Plays the Song you put after the command.")
     async def play(self, ctx, *, url):
-        if self.voice_client == None:
+        if self.voice_client is None:
             self.voice_client = ctx.voice_client
         if ctx.voice_client.is_playing():
             self.ctx = ctx
@@ -230,10 +230,10 @@ class Music(commands.Cog):
                 title, lyrics = data["title"], data["lyrics"]
                 await resp.edit_original_message(content=f"► **{self.currentPlayingSong}** ◄")
                 while len(lyrics) > 1500:
-                    reply = await ctx.send(f"```{lyrics[:1500]}```")
+                    await ctx.send(f"```{lyrics[:1500]}```")
                     lyrics = lyrics[1500:]
                 else:
-                    reply = await ctx.send(f"```{lyrics}```")
+                    await ctx.send(f"```{lyrics}```")
             except lyrics_extractor.LyricScraperException:
                 await resp.edit_original_message(content="There are sadly no Lyrics for this song available")
         else:

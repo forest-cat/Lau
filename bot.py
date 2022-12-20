@@ -32,14 +32,14 @@ bot.remove_command('help')
 
 
 # Loading the Extensions aka. cogs
-registered_extensions = ['cogs.main', '!cogs.music', 'cogs.r6tracker', 'cogs.slash', 'cogs.twitch', 'cogs.music2']
+registered_extensions = ['cogs.main', 'cogs.music', '!cogs.r6tracker', 'cogs.slash', 'cogs.twitch', '!cogs.music2', 'cogs.voice_recognition']
 
-for extension in registered_extensions:
-    if not extension.startswith("!"):
+for extension in registered_extensions:    
+    if extension.startswith('!'):
+        print(f"\033[31m[-]\033[00m Extension skipped: {extension.replace('!','')}")
+    else:
         bot.load_extension(extension)
         print(f"\033[92m[+]\033[00m Extension loaded: {extension}")
-    else:
-        print(f"\033[31m[-]\033[00m Extension skipped: {extension.replace('!','')}")
 
 
 @bot.slash_command(guild_ids=config["guild_ids"], description="Loads the given cog (this can break some extensions, be careful what you do!)")
