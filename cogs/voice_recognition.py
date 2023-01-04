@@ -1,4 +1,3 @@
-import imp
 from vosk import Model, KaldiRecognizer, SetLogLevel
 from discord.commands import slash_command, Option 
 from difflib import SequenceMatcher
@@ -17,9 +16,10 @@ import os
 
 # Importing the read_config() function from bot.py file and music module
 sys.path.append(os.path.dirname(__file__)[:-4])
-from bot import read_config
-#!from music import Music this needs a fix so the cog is loaded normal again (i probably have to change things with the folder and the sys append)
+sys.path.append(os.path.dirname(__file__))
 
+from bot import read_config
+from music import Music
 
 
 class Voice_Recognition(commands.Cog):

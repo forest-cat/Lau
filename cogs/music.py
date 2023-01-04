@@ -116,6 +116,13 @@ class Music(commands.Cog):
     async def on_ready(self):
         pass
 
+    @slash_command(guild_ids=config["guild_ids"], description="Test Command")
+    async def test(self, ctx):
+        print("lol")
+    
+    def lol():
+        print("lol from lol")
+
     @slash_command(guild_ids=config["guild_ids"], description="Plays the Song you put after the command.")
     async def play(self, ctx, *, url):
         if self.voice_client is None:

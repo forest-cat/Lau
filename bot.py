@@ -6,6 +6,9 @@ import json
 import os
 
 
+
+
+
 def read_config():
     os.chdir(os.path.dirname(__file__))
     # Reading Config File
@@ -29,6 +32,8 @@ INTENTS.presences = True
 
 bot = commands.Bot(command_prefix=PREFIX, description=DESCRIPTION, intents=INTENTS)
 bot.remove_command('help')
+
+
 
 
 # Loading the Extensions aka. cogs
@@ -61,6 +66,5 @@ async def unload_cog(ctx, cog_name: str):
             await ctx.respond(f"The Cog: `{cog_name}` was never loaded", ephemeral=True)
     else:
         await ctx.respond("You dont have the permission to manage Cogs", ephemeral=True)
-    
 
 bot.run(TOKEN)
