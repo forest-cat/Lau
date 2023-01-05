@@ -101,8 +101,8 @@ class Music(commands.Cog):
         while self.loop_song:
             if not ctx.voice_client.is_playing() and not self.is_paused:
                 player = await Music.YTDLSource.from_url(self.currentPlayingSong, loop=self.bot.loop, stream=True)
-                await ctx.send('Now playing: `{}`'.format(player.title))
-                ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+                await ctx.send(f'Now playing: `{player.title}`')
+                ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
             if not self.loop_song:
                 print("stopped loop")
                 break
@@ -144,9 +144,9 @@ class Music(commands.Cog):
         else:
             msg = await ctx.respond(f"Searching `{url}`")
             player = await Music.YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
-            await msg.edit_original_message(content='Now playing: `{}`'.format(player.title))
+            await msg.edit_original_response(content=f'Now playing: `{player.title}`')
             self.currentPlayingSong = player.title
-            ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+            ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
             ctx.voice_client.source.volume = self.player_volume / 100
                
     @slash_command(guild_ids=config["guild_ids"], description="Changes the player's volume")
@@ -156,7 +156,7 @@ class Music(commands.Cog):
         if volume >= 1 and volume <= 200:
             self.player_volume = volume
             ctx.voice_client.source.volume = self.player_volume / 100
-            await ctx.respond("Changed volume to `{}%`".format(volume))
+            await ctx.respond(f"Changed volume to `{volume}%`")
         else:
             await ctx.respond(f"Versuchs gar nicht erst du Hurensohn, dein IQ beträgt: `{volume*-1 if volume >=1 else volume}`")
 
@@ -164,7 +164,7 @@ class Music(commands.Cog):
     async def skip(self, ctx):
         ctx.voice_client.stop()
         self.running = False
-        if self.running == False:
+        if not self.running:
             print("started loop from skip")
             self.task = self.bot.loop.create_task(self.music_loop(ctx=ctx))
             self.running = True

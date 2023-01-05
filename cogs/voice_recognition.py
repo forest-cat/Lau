@@ -71,6 +71,7 @@ class Voice_Recognition(commands.Cog):
             for command in possible_commands:
                 if SequenceMatcher(None, command, "play").ratio() > 0.5:
                     print(f"playing music now by {user_id}")
+                    await Music.play(ctx=user_id, url="Bitcoins D. Lynnwood")
             
 
             for channel in read_config()['bot_channels']:
