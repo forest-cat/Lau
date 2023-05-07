@@ -19,4 +19,4 @@ It is currently in development and its written in [python](https://python.org) a
 
 Feel free to review the code and create pull requests :)
 
-If there are any question contact me on discord: 𝕱𝖔𝖗𝖊𝖘𝖙_𝕮𝖆𝖙#0512
+If there are any question contact me on discord: 𝕱𝖔𝖗𝖊𝖘𝖙_𝕮𝖆𝖙#8895
